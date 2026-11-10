@@ -671,6 +671,30 @@ void handleNotifications()
 
 void setRealtimePixel(uint16_t i, byte r, byte g, byte b, byte w)
 {
+  // --- ScreenGlow helderheidsfactoren per zone ---
+  float factor = 1.0f;
+
+  if (i <= 10) {
+    factor = 0.90f; // Rechterkant (LEDs 0-10): 90%
+  } else if (i <= 14) {
+    factor = 0.15f; // Bovenhoek rechts (LEDs 11-14): 15%
+  } else if (i <= 26) {
+    factor = 1.00f; // Boven midden (LEDs 15-26): 100%
+  } else if (i <= 31) {
+    factor = 0.30f; // Bovenhoek links (LEDs 27-31): 30%
+  } else if (i <= 42) {
+    factor = 0.20f; // Linkerkant (LEDs 32-42): 20%
+  } else if (i <= 63) {
+    factor = 0.40f; // Onderkant (LEDs 43-63): 40%
+  }
+
+  // Herschaal inkomende UDP-videodata
+  r = (byte)(r * factor);
+  g = (byte)(g * factor);
+  b = (byte)(b * factor);
+  w = (byte)(w * factor);
+  // -----------------------------------------------
+  
   unsigned pix = i + arlsOffset;
   strip.setRealtimePixelColor(pix, RGBW32(r,g,b,w));
 }
