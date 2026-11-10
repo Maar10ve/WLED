@@ -688,13 +688,13 @@ void setRealtimePixel(uint16_t i, byte r, byte g, byte b, byte w)
     factor = 0.40f; // Onderkant (LEDs 43-63): 40%
   }
 
-  // Herschaal inkomende UDP-videodata
+  // Herschaal inkomende UDP-videodata 
   r = (byte)(r * factor);
   g = (byte)(g * factor);
   b = (byte)(b * factor);
   w = (byte)(w * factor);
   // -----------------------------------------------
-  
+
   unsigned pix = i + arlsOffset;
   strip.setRealtimePixelColor(pix, RGBW32(r,g,b,w));
 }
